@@ -1,0 +1,97 @@
+<! DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Directions </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js" type="application/javascript"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOymxd_CtN9nPiOUwLEBvF4qfvaVLJMC4.exp&sensor=true"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <style>
+    #map {
+    width: 600px;
+    height: 550px;
+    border-radius: 25px;
+}
+    </style>
+    <div  class="dropdown">
+        <button style="font-size:160%" class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <Strong>Choose one : </Strong>
+            <span class="caret"></span>
+        </button>
+        <ul style="font-size:160%" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="google-directions.html">Get Directions</a></li>
+            <li><a href="weather.html">Check Weather</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="login-page.html">Logout</a></li>
+        </ul>
+    </div>
+    </head>
+    <body background = "image.jpg">
+    <div ng-app="directions" class="map" ng-controller="getdirections" align="center">
+        <div class="row">
+        <p style="font-size:130%" align="center"><b>Enter the start and end location: </b></p><br/>
+      <input style="font-size:130%"align="center" type="text" ng-model="startlocation" id="startlocation" placeholder="From">
+        <input style="font-size:130%" align="center" type="text" ng-model="endlocation" id="endlocation" placeholder="To"><br/><br/>
+            
+<input style="font-size:130%" align="center" type="button" value="submit" class="btn btn-success" ng-click="routes()" id="btn"><br/>
+         
+            </div>
+        <div id="map"></div>
+        </div>
+    </body>
+</html>
+<script>
+ var app = angular.module('directions',[])
+.controller('getdirections', function($scope){
+    
+    var maps;
+    var opt;
+    
+    var display = new google.maps.DirectionsRenderer({draggable:true});
+    
+    var service = new google.maps.DirectionsService();
+    
+    $scope.initialize = function(){
+        var position = new google.maps.LatLng(10,10);
+        opt ={
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            zoom: 3,
+            center: position
+        };
+        maps = new google.maps.Map(document.getElementById('map'), opt);
+    };
+    
+
+
+    
+    $scope.routes = function(){
+         
+        var from = document.getElementById('startlocation').value;
+        var to = document.getElementById('endlocation').value;
+        
+        
+        var req = {
+            origin: from,
+            destination: to,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+        
+        service.route(req, function(resp, stat){
+            if(stat == google.maps.DirectionsStatus.OK){
+              display.setMap(maps);
+                display.setDirections(resp);
+                console.log(stat);
+            }
+        });
+    };
+    
+    google.maps.event.addDomListener(window, 'load', $scope.initialize);
+    
+});
+
+</script>

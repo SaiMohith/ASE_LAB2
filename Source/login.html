@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign-in Page</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js" type="application/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<div class="container-fluid">
+   <div class="navbar-header">
+</div>
+     <ul style="font-size:160%" class="nav navbar-nav">
+         <li><a href="login.html"><button type="button" class="btn btn-default"><strong>login</strong></button></a></li>
+         <li><a href="registerPage.html"><button type="button" class="btn btn-default"><strong>register</strong></button></a></li>
+     </ul>
+   </div>
+
+    </head>
+    <body background = "image.jpg">
+    <div ng-app="log-in" ng-controller="loginControl">
+    <div class="login" align="center"></div><br/>
+    <form align="center" action="welcome.html">
+   <div style="font-size:160%" align="center"class="input">
+       <p>Login:</p>
+       <input ng-model="user.Name" placeholder="Username">
+    <br/><br/>
+    <input ng-model="user.pwd" type="password" placeholder="Password">
+    <br/><br/>
+    <input style="font-size:130%" type="submit" ng-click="login(user.Name, user.pwd)" value="Login" class="btn btn-primary">
+    <br/><br/>
+</div>
+        </form>
+<div ng-repeat="login in logins"></div>
+
+</div> 
+      <script>
+          var app = angular.module("log-in", [])
+       .controller("loginControl", function($scope){
+      
+    $scope.logins = [];
+    $scope.login = function (user, pwd) {
+        localStorage.setItem("Uname", user);
+        localStorage.setItem("Upwd", pwd);
+      
+        $scope.logins.push(localStorage.getItem("Uname") + " logged in.");
+        $scope.logins.push(localStorage.getItem("Upwd") + " pwd ");
+        $location.path('welcome.html');
+    };
+});
+</script>  
+    </body>
+</html>
+ 
+    

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registration Page</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js" type="application/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+<div class="container-fluid">
+   <div class="navbar-header">
+ </div>
+     <ul style="font-size:160%" class="nav navbar-nav">
+         <li><a href="login.html"><button type="button" class="btn btn-default">><strong>login</strong></button></a></li>
+         <li><a href="registerPage.html"><button type="button" class="btn btn-default"><strong>register</strong></button></a></li>
+     </ul>
+   </div>
+    </head>
+    <body background = "image.jpg">
+    <div style="font-size:160%" align="center" id="login" class="sign-up"  ng-controller="Ctrl">
+         <p ><strong>Please Fill the details:</strong></p>
+        <form ng-app="Reg"  name="form" align="center">
+        <input type="text" placeholder="Username" ng-model="user.Name">
+            <br/><br/>
+            
+        <input type="email" name="address" placeholder="Email" ng-model="user.Email">
+        <span ng-show="form.Address.$error.email">Invalid email-id.</span><br/><br/>
+            <input type="password" placeholder="password" ng-model="user.pwd"><br/><br/>
+            <input type="password" placeholder="repeat password" ng-model="user.pwd2">
+            
+            <br/><br/>
+    <input style="font-size:130%" class="btn btn-success" type="submit" ng-click="reg(user.Name,user.Email,user.pwd,user.pwd2)"
+           onclick="location.href='login.html';" value="Register">
+            <input style="font-size:130%"class="btn btn-warning" type="reset" value="Reset">
+     </form>
+        
+        </div>
+        
+        
+        <script>
+            var app = angular.module("Reg", [])
+        .controller("Ctrl", function($scope){
+            
+            $scope.logins = [];
+            $scope.reg = function(user, mail, pwd, pwd2){
+            localStorage.setItem("Username",user);
+            localStorage.setItem("email",mail);
+            localStorage.setItem("pass",pwd);
+                localStorage.setItem("pass2",pwd2);
+                $scope.logins.push(localStorage.getItem("Username"));
+                $scope.logins.push(localStorage.getItem("email"));
+                $scope.logins.push(localStorage.getItem("pass"));
+                $scope.logins.push(localStorage.getItem("pass2"));
+            };
+        });
+        </script>
+    </body>
+</html>

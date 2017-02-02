@@ -1,0 +1,68 @@
+<! DOCTYPE html>
+<html>
+    <head>
+<title>Check Weather!</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js" type="application/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <style>
+        
+     .weatherModule {
+  background: #fff100;
+  height: 300px;
+  width: 550px;
+  border-radius: 25px;
+  padding: 1em;
+}
+
+
+        </style>
+        <div  class="dropdown">
+            <button style="font-size:160%" class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <Strong>Choose one : </Strong>
+                <span class="caret"></span>
+            </button>
+            <ul style="font-size:160%" class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li><a href="gdirections.html">Get Directions</a></li>
+                <li><a href="weather.html">Check Weather</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="login.html">Logout</a></li>
+            </ul>
+        </div>
+    </head>
+
+    <body background="image.jpg">
+        <div style="font-size:160%" ng-app="myweather" ng-controller= "ctrl" align="center">
+  <button id="btn" ng-click="getWeather()" align="center"> click to show weather </button>
+  <br/>
+  <br/>
+  <div class="weatherModule">
+    <p class="currentConditions" ng-bind="currentweather.html"></p>
+  </div>
+</div>
+
+<script>
+            
+var app = angular.module('myweather', [])
+  .controller('ctrl', function($scope, $http) {
+    $scope.getWeather = function() {
+      $http.get('https://api.wunderground.com/api/58c35794f38b983e/conditions/q/MO/Kansas%20City.json').success(function(data) {
+        console.log(data);
+        temp = data.current_observation.temp_f;
+        weather = data.current_observation.weather;
+        city = data.current_observation.display_location.city;
+        state = data.current_observation.display_location.state;
+        console.log(temp);
+        $scope.currentweather = {
+          html: " Temperature in "+ city +","+ state +" is " + temp + " F and " + weather + " now "
+        }
+      })
+    }
+
+  });
+
+        </script>
+    </body>
+</html>
